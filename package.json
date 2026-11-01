@@ -1,0 +1,28 @@
+{
+  "name": "@earning-machine/production-curated-resource-digest-engine",
+  "version": "1.0.0",
+  "description": "Production Curated Resource Digest & Affiliate Engine with automated item parser, taxonomy tagger, markdown/HTML generator, FTC-compliant edge link cloaker, click telemetry router, and dual-currency sponsorship invoicing.",
+  "main": "engine/curation_engine/index.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "node engine/curation_engine/demo_runner.js",
+    "edge:dev": "wrangler dev",
+    "edge:deploy": "wrangler deploy"
+  },
+  "keywords": [
+    "curated-digest",
+    "resource-newsletter",
+    "affiliate-cloaker",
+    "ftc-compliance",
+    "cloudflare-workers",
+    "d1-database",
+    "sponsorship-engine"
+  ],
+  "author": "Dr. Milind Chatrabhuji",
+  "license": "MIT",
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20241022.0",
+    "typescript": "^5.3.3",
+    "wrangler": "^3.80.0"
+  }
+}

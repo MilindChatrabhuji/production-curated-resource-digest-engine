@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WAY #80 — Curated Resource Digest & Affiliate Engine Simulator</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --accent: #38bdf8;
+      --accent-hover: #0284c7;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #334155;
+      --success: #34d399;
+      --warning: #f59e0b;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: var(--bg); color: var(--text); padding: 24px; min-height: 100vh; }
+    .header { max-width: 1200px; margin: 0 auto 24px auto; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 16px; }
+    .header h1 { font-size: 22px; color: var(--accent); }
+    .header .badge { background: #0369a1; padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 700; }
+    .nav-tabs { max-width: 1200px; margin: 0 auto 24px auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    .tab-btn { background: var(--card-bg); border: 1px solid var(--border); color: var(--text-muted); padding: 14px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; text-align: center; }
+    .tab-btn:hover { border-color: var(--accent); color: var(--text); }
+    .tab-btn.active { background: #0284c7; color: #ffffff; border-color: #38bdf8; }
+    .container { max-width: 1200px; margin: 0 auto; background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 24px; min-height: 520px; }
+    .screen { display: none; }
+    .screen.active { display: block; animation: fadeIn 0.3s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+    
+    /* Screen 1: Digest Browser */
+    .digest-view { display: grid; grid-template-columns: 280px 1fr; gap: 20px; }
+    .issue-list { background: #0f172a; border-radius: 8px; padding: 16px; border: 1px solid var(--border); }
+    .issue-item { padding: 10px; border-radius: 6px; cursor: pointer; margin-bottom: 8px; border: 1px solid transparent; }
+    .issue-item:hover { background: #1e293b; border-color: var(--accent); }
+    .issue-item.active { background: #0369a1; color: #fff; }
+    .digest-content { background: #0f172a; border-radius: 8px; padding: 24px; border: 1px solid var(--border); }
+    .digest-item-card { background: #1e293b; border: 1px solid var(--border); border-radius: 8px; padding: 16px; margin-bottom: 16px; }
+    .digest-item-card h3 { color: var(--accent); font-size: 16px; margin-bottom: 6px; }
+
+    /* Screen 2: Ingestion & Parser */
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; margin-bottom: 6px; font-size: 14px; color: var(--text-muted); }
+    .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 10px; background: #0f172a; border: 1px solid var(--border); color: #fff; border-radius: 6px; font-size: 14px; }
+    .btn-action { background: #0284c7; color: #fff; border: none; padding: 12px 24px; border-radius: 6px; font-weight: 600; cursor: pointer; }
+    .btn-action:hover { background: #0369a1; }
+    .result-box { margin-top: 20px; background: #0f172a; border: 1px solid var(--border); border-radius: 8px; padding: 16px; font-family: monospace; font-size: 13px; color: #38bdf8; max-height: 240px; overflow-y: auto; }
+
+    /* Screen 3: FTC Cloaker */
+    .cloaker-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+    /* Screen 4: Sponsorship Auction */
+    .ratecard-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .rate-card { background: #0f172a; border: 1px solid var(--border); border-radius: 8px; padding: 20px; text-align: center; }
+    .rate-card h3 { color: var(--accent); margin-bottom: 10px; }
+    .rate-card .price { font-size: 28px; font-weight: 800; color: #fff; margin: 12px 0; }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div>
+      <h1>Production Curated Resource Digest &amp; Affiliate Engine</h1>
+      <p style="color: var(--text-muted); font-size: 14px;">Interactive 4-Screen Operational Simulator (WAY #80 / Product 82)</p>
+    </div>
+    <div class="badge">100% EVIDENCE-BASED &bull; ZERO CLOUD COST</div>
+  </div>
+
+  <div class="nav-tabs">
+    <button class="tab-btn active" onclick="switchTab(0)">1. Digest Issue Browser</button>
+    <button class="tab-btn" onclick="switchTab(1)">2. Automated Link Ingestion</button>
+    <button class="tab-btn" onclick="switchTab(2)">3. FTC Affiliate Cloaker</button>
+    <button class="tab-btn" onclick="switchTab(3)">4. Sponsorship Auction Terminal</button>
+  </div>
+
+  <div class="container">
+    <!-- Screen 1 -->
+    <div class="screen active" id="screen-0">
+      <h2 style="margin-bottom: 16px; color: var(--accent);">Curated Digest Issue Explorer</h2>
+      <div class="digest-view">
+        <div class="issue-list">
+          <div class="issue-item active" onclick="selectIssue(42)">Issue #42 — Clinical Informatics &amp; High-Yield Therapeutics</div>
+          <div class="issue-item" onclick="selectIssue(41)">Issue #41 — Cloud EHR FHIR Pipeline Architecture</div>
+          <div class="issue-item" onclick="selectIssue(40)">Issue #40 — Computational Biomarker Validation</div>
+        </div>
+        <div class="digest-content" id="digest-display">
+          <h2 style="font-size: 20px; color: #fff; margin-bottom: 8px;">Clinical Informatics &amp; High-Yield Therapeutics — Issue #42</h2>
+          <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 16px;">Curated by Dr. Milind Chatrabhuji • Modern Evidence-Based Medicine Standard</p>
+          
+          <div class="digest-item-card">
+            <h3>Prospective Validation of Biomarker Clinical Trial Endpoints</h3>
+            <p style="font-size: 13px; color: #64748b; margin-bottom: 8px;">Source: clinicaltrials.example.com &bull; Level 1 Systematic Review &bull; Score: 96/100</p>
+            <p style="font-size: 14px; margin-bottom: 10px;">Multi-center randomized trial evaluating high-throughput computational phenotyping pipelines in cardiology.</p>
+            <p style="font-size: 13px; color: var(--accent);"><strong>Curator Rationale:</strong> Exceptional statistical power with zero confounding bias.</p>
+          </div>
+
+          <div class="digest-item-card">
+            <h3>Cloud-Native FHIR JSON Data Ingestion Engine</h3>
+            <p style="font-size: 13px; color: #64748b; margin-bottom: 8px;">Source: informatics.example.com &bull; Bench Informatics Benchmark &bull; Score: 94/100</p>
+            <p style="font-size: 14px; margin-bottom: 10px;">Sub-10ms latency streaming ETL for million-patient cohort health record synchronization.</p>
+            <p style="font-size: 13px; color: var(--accent);"><strong>Curator Rationale:</strong> Zero-dependency implementation verified for HIPAA/DPDP Act compliance.</p>
+          </div>
+          
+          <div style="font-size: 12px; color: var(--text-muted); border-top: 1px solid var(--border); padding-top: 12px; margin-top: 16px;">
+            Statutory FTC Notice: Links in this publication may include sponsored partner mentions. We only feature resources passing Oxford CEBM evidence benchmarks.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Screen 2 -->
+    <div class="screen" id="screen-1">
+      <h2 style="margin-bottom: 16px; color: var(--accent);">Automated Curated Resource Ingestion &amp; Evidence Scorer</h2>
+      <div style="max-width: 720px;">
+        <div class="form-group">
+          <label>Resource Target URL (RFC 2606 Compliant)</label>
+          <input type="text" id="target-url" value="https://resources.example.com/clinical-trials/prospective-cohort-study">
+        </div>
+        <div class="form-group">
+          <label>Evidence Appraisal Hierarchy (Oxford CEBM Standard)</label>
+          <select id="evidence-level">
+            <option value="LEVEL_1_SYSTEMATIC_REVIEW_RCT">Level 1: Systematic Review of Double-Blind RCTs (Highest)</option>
+            <option value="LEVEL_2_RANDOMIZED_TRIAL">Level 2: Individual Randomized Controlled Trial</option>
+            <option value="LEVEL_3_PROSPECTIVE_COHORT">Level 3: Prospective Controlled Cohort Study</option>
+            <option value="BENCH_INFORMATICS_CODE_BENCHMARK">Bench Informatics &amp; Architectural Benchmark</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Editorial Summary / Clinical Abstract</label>
+          <textarea id="editorial-summary" rows="3">Double-blind prospective trial assessing algorithmic decision support in intensive care pharmacotherapy outcomes.</textarea>
+        </div>
+        <button class="btn-action" onclick="runIngestion()">Run Automated Ingestion &amp; Scoring</button>
+        <div class="result-box" id="ingestion-result">
+          Click "Run Automated Ingestion &amp; Scoring" to parse metadata, assign taxonomy categories, and compute evidence scores.
+        </div>
+      </div>
+    </div>
+
+    <!-- Screen 3 -->
+    <div class="screen" id="screen-2">
+      <h2 style="margin-bottom: 16px; color: var(--accent);">FTC-Compliant Affiliate Link Cloaker &amp; Redirect Gateway</h2>
+      <div class="cloaker-grid">
+        <div>
+          <div class="form-group">
+            <label>Partner / Affiliate Destination URL</label>
+            <input type="text" id="aff-target" value="https://partner.example.com/software-suite?ref=incomeengine">
+          </div>
+          <div class="form-group">
+            <label>Custom Cloaked Slug</label>
+            <input type="text" id="aff-slug" value="clinical-cloud-pro">
+          </div>
+          <div class="form-group">
+            <label>Partner Identity / Sponsor Name</label>
+            <input type="text" id="aff-sponsor" value="Enterprise Health Informatics Ltd">
+          </div>
+          <button class="btn-action" onclick="generateCloakedLink()">Generate Cloaked Edge Route</button>
+        </div>
+        <div>
+          <div class="result-box" id="cloaker-result" style="height: 280px; max-height: 280px;">
+            Awaiting link generation...
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Screen 4 -->
+    <div class="screen" id="screen-3">
+      <h2 style="margin-bottom: 16px; color: var(--accent);">Weekly Sponsorship Retainer &amp; Auction Terminal</h2>
+      <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 24px;">Institutional sponsorship booking with dual-currency pro-forma invoice generator.</p>
+      
+      <div class="ratecard-grid">
+        <div class="rate-card">
+          <h3>Starter Retainer</h3>
+          <p style="color: var(--text-muted); font-size: 13px;">Secondary Card + High-Yield Bullet</p>
+          <div class="price">$500 <span style="font-size: 14px; font-weight: normal; color: var(--text-muted);">/ mo</span></div>
+          <p style="font-size: 13px; color: #64748b; margin-bottom: 16px;">~15,000 guaranteed impressions</p>
+          <button class="btn-action" style="width: 100%;" onclick="bookSponsorship('Starter Retainer', 500, 41500)">Book Retainer</button>
+        </div>
+
+        <div class="rate-card" style="border-color: #38bdf8;">
+          <h3 style="color: #38bdf8;">Professional Retainer</h3>
+          <p style="color: var(--text-muted); font-size: 13px;">Primary Banner + Mid-Digest Spotlight</p>
+          <div class="price">$1,500 <span style="font-size: 14px; font-weight: normal; color: var(--text-muted);">/ mo</span></div>
+          <p style="font-size: 13px; color: #64748b; margin-bottom: 16px;">~45,000 guaranteed impressions</p>
+          <button class="btn-action" style="width: 100%;" onclick="bookSponsorship('Professional Retainer', 1500, 124500)">Book Retainer</button>
+        </div>
+
+        <div class="rate-card">
+          <h3>Exclusive Category</h3>
+          <p style="color: var(--text-muted); font-size: 13px;">Title Sponsor + Category Lockout</p>
+          <div class="price">$3,000 <span style="font-size: 14px; font-weight: normal; color: var(--text-muted);">/ mo</span></div>
+          <p style="font-size: 13px; color: #64748b; margin-bottom: 16px;">~120,000+ guaranteed impressions</p>
+          <button class="btn-action" style="width: 100%;" onclick="bookSponsorship('Exclusive Category Retainer', 3000, 249000)">Book Retainer</button>
+        </div>
+      </div>
+
+      <div class="result-box" id="invoice-result" style="margin-top: 24px; display: none;">
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function switchTab(index) {
+      document.querySelectorAll('.tab-btn').forEach((btn, i) => {
+        btn.classList.toggle('active', i === index);
+      });
+      document.querySelectorAll('.screen').forEach((scr, i) => {
+        scr.classList.toggle('active', i === index);
+      });
+    }
+
+    function selectIssue(num) {
+      const display = document.getElementById('digest-display');
+      display.innerHTML = `
+        <h2 style="font-size: 20px; color: #fff; margin-bottom: 8px;">Issue #${num} Curated Review</h2>
+        <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 16px;">Verified by Dr. Milind Chatrabhuji • Modern Evidence-Based Standard</p>
+        <div class="digest-item-card">
+          <h3>High-Yield Healthcare Infrastructure Dataset #${num}</h3>
+          <p style="font-size: 13px; color: #64748b; margin-bottom: 8px;">Source: publisher.example.com &bull; Evidence: Level 1 Systematic Review</p>
+          <p style="font-size: 14px;">Peer-reviewed architectural evaluation of cloud telemetry and cryptographic authentication in distributed health databases.</p>
+        </div>
+      `;
+    }
+
+    function runIngestion() {
+      const url = document.getElementById('target-url').value;
+      const level = document.getElementById('evidence-level').value;
+      const summary = document.getElementById('editorial-summary').value;
+      
+      const resBox = document.getElementById('ingestion-result');
+      resBox.innerHTML = `[SUCCESS] Ingested URL: ${url}
+[TAXONOMY] Category Assigned: CLINICAL INFORMATICS & MODERN THERAPEUTICS
+[EVIDENCE APPRAISAL] Hierarchy: ${level}
+[SCORING] Methodology: 96/100 | Utility Score: 98/100
+[STATUS] 100% Modern Evidence-Based Standard Verified. Zero unverified claims.
+[OUTPUT] Item ready for Issue compilation.`;
+    }
+
+    function generateCloakedLink() {
+      const slug = document.getElementById('aff-slug').value;
+      const target = document.getElementById('aff-target').value;
+      const sponsor = document.getElementById('aff-sponsor').value;
+
+      const resBox = document.getElementById('cloaker-result');
+      resBox.innerHTML = `[EDGE CLOAKER CONFIGURED]
+--------------------------------------------------
+Public Edge Route : https://digest.example.com/r/${slug}
+Destination Target: ${target}
+Sponsor Name      : ${sponsor}
+HTTP Response Code: 302 Found (Sub-15ms Edge Latency)
+Headers Injected  :
+  X-Robots-Tag    : noindex, nofollow, sponsored
+  X-FTC-Disclosure: Statutory FTC Disclosure Enforced
+  Cache-Control   : no-store, no-cache
+
+Telemetry Logged  : Anonymous Click ID generated. D1 click_events table synchronized.`;
+    }
+
+    function bookSponsorship(tierName, usd, inr) {
+      const invBox = document.getElementById('invoice-result');
+      invBox.style.display = 'block';
+      invBox.innerHTML = `[PRO-FORMA INVOICE GENERATED]
+==================================================
+Invoice ID   : INV-SPONSOR-${Date.now()}
+Sponsorship  : ${tierName}
+Pricing      : $${usd}.00 USD (Foreign Client) / ₹${inr.toLocaleString()} INR (Domestic Client)
+Payment Modes:
+  - Domestic UPI: milind.chatrabhuji@okhdfcbank
+  - International PayPal: milind.chatrabhuji@gmail.com
+SLA Guarantee: 100% Impression Fulfillment or 30-day Full Refund.
+Tax Status   : GST LUT Zero-Rated Export or Compliant Domestic Invoicing.`;
+    }
+  </script>
+</body>
+</html>
